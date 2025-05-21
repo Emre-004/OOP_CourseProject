@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class AddCommand {
+public class AddCommand implements Command{
     private WarehouseService service;
     private Scanner scanner;
 
