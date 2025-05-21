@@ -1,4 +1,8 @@
 import java.util.Scanner;
+/**
+ * Команда за запазване на текущите данни в нов файл.
+ * Позволява на потребителя да въведе ново име на файл.
+ */
 
 public class SaveAsCommand implements Command{
     private WarehouseService service;

@@ -2,7 +2,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Основна бизнес логика за управление на продукти и взаимодействие със склада.
+ */
 public class WarehouseService {
     private List<Product> products = new ArrayList<>();
     private List<LogEntry> logs = new ArrayList<>();

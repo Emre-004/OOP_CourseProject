@@ -1,3 +1,6 @@
+/**
+ * Команда за запазване на текущите данни в оригиналния файл чрез .
+ */
 public class SaveCommand implements Command{
     private WarehouseService service;
     private FileManager fileManager;

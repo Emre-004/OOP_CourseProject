@@ -1,3 +1,6 @@
+/**
+ * Клас, който представя местоположение в склада (секция, рафт, номер).
+ */
 public class Location {
     private String section;
     private String shelf;

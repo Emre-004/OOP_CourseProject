@@ -1,6 +1,9 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
+/**
+ * Команда за изтриване на продукти с изтекъл срок на годност.
+ */
 
 public class CleanCommand implements Command{
     private WarehouseService service;

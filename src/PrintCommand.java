@@ -1,3 +1,6 @@
+/**
+ * Команда за отпечатване на всички продукти в склада.
+ */
 public class PrintCommand implements Command{
     private WarehouseService service;
 

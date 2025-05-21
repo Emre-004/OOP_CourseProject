@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Клас за управление на файлови операции: четене и запис на продукти.
+ */
 
 public class FileManager {
     public void saveToFile(List<Product> products, String filename) {

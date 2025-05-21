@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+/**
+ * Команда за премахване на продукт от склада.
+ * Позволява на потребителя да въведе параметри за премахване.
+ */
 
 public class RemoveCommand implements Command{
     private WarehouseService service;

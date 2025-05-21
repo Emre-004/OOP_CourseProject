@@ -2,6 +2,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+/**
+ * Команда за извеждане на историята от действия и логове.
+ */
 
 public class LogCommand implements Command{
     private WarehouseService service;

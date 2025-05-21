@@ -1,3 +1,6 @@
+/**
+ * Команда за затваряне на текущия отворен файл и почистване на данните.
+ */
 public class CloseCommand implements Command {
     private WarehouseService service;
 

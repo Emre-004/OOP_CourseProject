@@ -1,4 +1,8 @@
 import java.util.Scanner;
+/**
+ * Команда за отваряне на файл с продукти.
+ * Зарежда съдържанието на склад от файл чрез .
+ */
 
 public class OpenCommand implements Command{
     private WarehouseService service;

@@ -1,3 +1,6 @@
+/**
+ * Клас, който представя една лог записка за промяна или действие върху продукт.
+ */
 public class LogEntry {
     private String action;
     private Product product;
