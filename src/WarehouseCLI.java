@@ -1,10 +1,18 @@
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 /**
- * Клас, който предоставя команден интерфейс (CLI) за управление на склада.
+ * Команден интерфейс за управление на склада.
+ * Позволява въвеждане и изпълнение на различни команди чрез конзолата.
  */
 public class WarehouseCLI {
+
+    /**
+     * Стартира интерфейса за работа със склада.
+     * Обработва команди, въведени от потребителя.
+     */
     public static void start() {
         Scanner scanner = new Scanner(System.in);
 

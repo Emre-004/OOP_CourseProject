@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-/**
- * Команда за премахване на продукт от склада.
- * Позволява на потребителя да въведе параметри за премахване.
- */
+import java.util.*;
 
-public class RemoveCommand implements Command{
+/**
+ * Команда за изваждане на продукти от склада по зададено име и количество.
+ * Приоритетно намалява продуктите с най-скоро изтичащ срок на годност.
+ * Извежда детайли за всяка намалена партида и обработва недостиг.
+ */
+public class RemoveCommand implements Command {
     private WarehouseService service;
     private Scanner scanner;
 
@@ -16,56 +14,85 @@ public class RemoveCommand implements Command{
         this.scanner = scanner;
     }
 
+    /**
+     * Изпълнява командата Remove: търси продукти по име, изважда количество,
+     * сортирано по срок на годност, извежда информация и логва всяко действие.
+     */
     @Override
     public void execute() {
         System.out.print("Име на продукт за изваждане: ");
-        String name = scanner.nextLine();
+        String name = scanner.nextLine().trim();
 
         System.out.print("Количество за изваждане: ");
-        double quantityToRemove = Double.parseDouble(scanner.nextLine());
+        double quantityToRemove;
+        try {
+            quantityToRemove = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Невалидно число.");
+            return;
+        }
 
-        double totalRemoved = 0;
-        List<Product> toRemoveLogs = new ArrayList<>();
-
-        Iterator<Product> iterator = service.getProducts().iterator();
-        while (iterator.hasNext() && totalRemoved < quantityToRemove) {
-            Product p = iterator.next();
+        List<Product> matching = new ArrayList<>();
+        for (Product p : service.getProducts()) {
             if (p.getName().equalsIgnoreCase(name)) {
-                double available = p.getQuantity();
-
-                if (available <= quantityToRemove - totalRemoved) {
-                    totalRemoved += available;
-                    System.out.println("Премахнато: " + available + " от " + p);
-                    iterator.remove();
-                    toRemoveLogs.add(p);
-                } else {
-                    double remaining = available - (quantityToRemove - totalRemoved);
-                    iterator.remove();
-
-                    Product updated = new Product(p.name, p.expiryDate, p.arrivalDate, p.manufacturer,
-                            p.unit, remaining, p.location, p.comment);
-                    service.getProducts().add(updated);
-
-                    Product removedPart = new Product(p.name, p.expiryDate, p.arrivalDate, p.manufacturer,
-                            p.unit, quantityToRemove - totalRemoved, p.location, p.comment);
-                    toRemoveLogs.add(removedPart);
-
-                    totalRemoved = quantityToRemove;
-                    System.out.println("Премахнато: " + (quantityToRemove - totalRemoved + available) + " от " + p);
-                }
+                matching.add(p);
             }
         }
+
+        if (matching.isEmpty()) {
+            System.out.println("Няма такъв продукт в склада.");
+            return;
+        }
+
+
+        matching.sort(Comparator.comparing(Product::getExpiryDate));
+
+        double remaining = quantityToRemove;
+        List<Product> toRemoveLogs = new ArrayList<>();
+
+        Iterator<Product> iterator = matching.iterator();
+        while (iterator.hasNext() && remaining > 0) {
+            Product p = iterator.next();
+            double available = p.getQuantity();
+
+            if (available <= remaining) {
+                remaining -= available;
+                service.getProducts().remove(p);
+                toRemoveLogs.add(p);
+                System.out.println("Премахнато: " + available + " от " + p.getName() + " на " + p.getLocation());
+            } else {
+                double newQuantity = available - remaining;
+
+                Product updated = new Product(p.getName(), p.getExpiryDate(), p.getArrivalDate(),
+                        p.getManufacturer(), p.getUnit(), newQuantity, p.getLocation(), p.getComment());
+
+                service.getProducts().remove(p);
+                service.getProducts().add(updated);
+
+                Product removedPart = new Product(p.getName(), p.getExpiryDate(), p.getArrivalDate(),
+                        p.getManufacturer(), p.getUnit(), remaining, p.getLocation(), p.getComment());
+
+                toRemoveLogs.add(removedPart);
+                System.out.println("Премахнато: " + remaining + " от " + p.getName() + " на " + p.getLocation());
+                remaining = 0;
+            }
+        }
+
+        if (remaining > 0) {
+            System.out.println("Недостатъчно количество. Налични: " + (quantityToRemove - remaining));
+            System.out.print("Искате ли да извадите наличното количество? (yes/no): ");
+            String choice = scanner.nextLine().trim().toLowerCase();
+            if (!choice.equals("yes")) {
+                System.out.println("Операцията е прекратена.");
+                return;
+            }
+        }
+
 
         for (Product p : toRemoveLogs) {
             service.logChange("remove", p);
         }
 
-        if (totalRemoved == 0) {
-            System.out.println("Няма наличност от продукта с име: " + name);
-        } else if (totalRemoved < quantityToRemove) {
-            System.out.println("Няма достатъчно количество. Премахнато е общо: " + totalRemoved);
-        } else {
-            System.out.println("Премахнато е общо: " + totalRemoved);
-        }
+        System.out.println("Изваждането завърши успешно.");
     }
 }
