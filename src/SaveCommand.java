@@ -1,4 +1,5 @@
 
+
 /**
  * Команда за запис на текущите данни в отворения файл.
  */
@@ -19,7 +20,7 @@ public class SaveCommand implements Command {
      * Ако няма отворен файл, изисква използване на командата saveas.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         if (service.getCurrentFileName() == null) {
             System.out.println("Няма отворен файл. Използвайте saveas.");
             return;

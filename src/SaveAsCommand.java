@@ -1,4 +1,5 @@
 
+
 import java.util.Scanner;
 
 /**
@@ -23,7 +24,7 @@ public class SaveAsCommand implements Command {
      * Задава новото име на файла като текущо.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         System.out.print("Въведи име на файл за запис: ");
         String filename = scanner.nextLine();
         fileManager.saveToFile(service.getProducts(), filename);

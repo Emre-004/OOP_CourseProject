@@ -1,4 +1,5 @@
 
+
 /**
  * Команда за извеждане на всички продукти в склада.
  */
@@ -16,7 +17,7 @@ public class PrintCommand implements Command {
      * Изпълнява командата за извеждане на списъка с продукти.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         service.printProducts();
     }
 }

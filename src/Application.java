@@ -1,4 +1,5 @@
 
+
 /**
  * Главен клас за стартиране на приложението.
  */
@@ -15,3 +16,4 @@ public class Application {
 //chcp 65001
 //javac *.java
 //java Application.java
+//add Kartof 2025-05-29 2025-05-10 TU kg 10 nqma 1/2/7

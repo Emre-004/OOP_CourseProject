@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +36,7 @@ public class LogCommand implements Command {
      * Филтрира записите според начална и крайна дата, въведени от потребителя.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         String fromStr;
         String toStr;
 

@@ -20,21 +20,22 @@ public class AddCommand implements Command {
         return input.matches(".*\\d.*");
     }
 
-    private String promptNonDigitInput(String label) {
+    private String promptNonDigitInput(String name) {
         while (true) {
-            System.out.print(label + ": ");
-            String input = scanner.nextLine().trim();
-            if (!containsDigit(input)) return input;
-            System.out.println(label + " не трябва да съдържа цифри!");
+            //System.out.print(label + ": ");
+            //String input = scanner.nextLine().trim();
+            if (!containsDigit(name)) return name;
+            System.out.println(name + " не трябва да съдържа цифри!");
         }
     }
 
-    private LocalDate promptValidDate(String label) {
+    private LocalDate promptValidDate(String date) {
         while (true) {
-            System.out.print(label + " (YYYY-MM-DD): ");
-            String input = scanner.nextLine().trim();
+            //System.out.print(label + " (YYYY-MM-DD): ");
+            //String input = scanner.nextLine().trim();
             try {
-                return LocalDate.parse(input);
+                //return LocalDate.parse(input);
+                return LocalDate.parse(date);
             } catch (Exception e) {
                 System.out.println("Невалиден формат за дата!");
             }
@@ -43,9 +44,10 @@ public class AddCommand implements Command {
 
     private double promptPositiveDouble(String label) {
         while (true) {
-            System.out.print(label + ": ");
+            //System.out.print(label + ": ");
             try {
-                double val = Double.parseDouble(scanner.nextLine().trim());
+                //double val = Double.parseDouble(scanner.nextLine().trim());
+                double val = Double.parseDouble(label);
                 if (val > 0) return val;
                 System.out.println(label + " трябва да е положително число!");
             } catch (NumberFormatException e) {
@@ -61,9 +63,9 @@ public class AddCommand implements Command {
      * и извежда текущото общо количество на продукта по име.
      */
     @Override
-    public void execute() {
-        String name = promptNonDigitInput("Име");
-
+    public void execute(String[] args) {
+        //String name = promptNonDigitInput("Име");
+        String name = promptNonDigitInput(args[0]);
         List<Product> sameNameProducts = service.findProductsByName(name);
         double totalQuantity = 0.0;
         for (Product p : sameNameProducts) {
@@ -71,14 +73,20 @@ public class AddCommand implements Command {
         }
         System.out.println("Общо количество налично за \"" + name + "\": " + totalQuantity);
 
-        LocalDate expiryDate = promptValidDate("Срок на годност");
-        LocalDate arrivalDate = promptValidDate("Дата на постъпване");
-        String manufacturer = promptNonDigitInput("Производител");
-        String unit = promptNonDigitInput("Единица (kg/l)");
-        double quantity = promptPositiveDouble("Количество");
+        //LocalDate expiryDate = promptValidDate("Срок на годност");
+        LocalDate expiryDate = promptValidDate(args[1]);
+        //LocalDate arrivalDate = promptValidDate("Дата на постъпване");
+        LocalDate arrivalDate = promptValidDate(args[2]);
+        //String manufacturer = promptNonDigitInput("Производител");
+        String manufacturer = promptNonDigitInput(args[3]);
+        //String unit = promptNonDigitInput("Единица (kg/l)");
+        String unit = promptNonDigitInput(args[4]);
+        //double quantity = promptPositiveDouble("Количество");
+        double quantity = promptPositiveDouble(args[5]);
 
-        System.out.print("Коментар: ");
-        String comment = scanner.nextLine().trim();
+        //System.out.print("Коментар: ");
+        //String comment = scanner.nextLine().trim();
+        String comment = args[6];
 
         for (Product existing : sameNameProducts) {
             if (existing.getExpiryDate().equals(expiryDate)) {
@@ -106,8 +114,9 @@ public class AddCommand implements Command {
 
         Location location = null;
         while (true) {
-            System.out.print("Местоположение (секция/рафт/номер): ");
-            String[] loc = scanner.nextLine().trim().split("/");
+            //System.out.print("Местоположение (секция/рафт/номер): ");
+            //String[] loc = scanner.nextLine().trim().split("/");
+            String[] loc = args[7].split("/");
             if (loc.length != 3) {
                 System.out.println("Местоположението трябва да е във формат секция/рафт/номер");
                 continue;

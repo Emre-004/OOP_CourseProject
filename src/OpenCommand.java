@@ -1,4 +1,5 @@
 
+
 import java.util.Scanner;
 
 /**
@@ -23,7 +24,7 @@ public class OpenCommand implements Command {
      * Зарежда списъка с продукти от подадения от потребителя файл.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         System.out.print("Въведи име на файл за отваряне: ");
         String filename = scanner.nextLine();
         service.setProducts(fileManager.loadFromFile(filename));

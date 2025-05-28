@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ public class RemoveCommand implements Command {
      * сортирано по срок на годност, извежда информация и логва всяко действие.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         System.out.print("Име на продукт за изваждане: ");
         String name = scanner.nextLine().trim();
 

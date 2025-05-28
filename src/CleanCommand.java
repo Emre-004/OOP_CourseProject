@@ -1,3 +1,4 @@
+
 import java.time.LocalDate;
 import java.util.Iterator;
 
@@ -19,7 +20,7 @@ public class CleanCommand implements Command {
      * Премахва всички продукти със срок на годност, който е преди или равен на текущата дата.
      */
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         LocalDate now = LocalDate.now();
         Iterator<Product> iterator = service.getProducts().iterator();
         int removedCount = 0;
